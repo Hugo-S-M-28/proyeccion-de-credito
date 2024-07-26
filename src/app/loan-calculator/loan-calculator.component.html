@@ -1,0 +1,110 @@
+<!-- src/app/loan-calculator/loan-calculator.component.html -->
+
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="main-content">
+    <div class="container mt-4">
+      <h2 class="mb-4 text-center">Calculadora de Préstamos</h2>
+
+      <!-- Parte 1: Formulario de Entrada -->
+      <div class="form-section mb-4">
+        <form (ngSubmit)="calculate()" class="mb-4">
+          <div class="row">
+            <!-- Campos del formulario -->
+            <div class="col-md-6 mb-3">
+              <label for="principal">Monto del Préstamo:</label>
+              <input type="number" id="principal" [(ngModel)]="principal" name="principal" class="form-control" placeholder="Ingrese el monto" required />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="annualRate">Tasa de Interés Anual (%):</label>
+              <input type="number" id="annualRate" [(ngModel)]="annualRate" name="annualRate" class="form-control" placeholder="Ingrese la tasa de interés" required />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="months">Plazo del Préstamo (meses):</label>
+              <input type="number" id="months" [(ngModel)]="months" name="months" class="form-control" placeholder="Ingrese el plazo" required />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="ivaRate">IVA de Interés (%):</label>
+              <input type="number" id="ivaRate" [(ngModel)]="ivaRate" name="ivaRate" class="form-control" placeholder="Ingrese el IVA" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="openingFee">Comisión por Contratación:</label>
+              <input type="number" id="openingFee" [(ngModel)]="openingFee" name="openingFee" class="form-control" placeholder="Ingrese la comisión por contratación" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="approvalFee">Comisión por Autorización:</label>
+              <input type="number" id="approvalFee" [(ngModel)]="approvalFee" name="approvalFee" class="form-control" placeholder="Ingrese la comisión por autorización" />
+            </div>
+          </div>
+          <span>
+            <img src="assets/icons8-v1.png" alt="Logo" class="img-fluid">
+            Completa los datos para realizar el cálculo
+          </span>
+          <button type="submit" class="btn btn-primary btn-block">Calcular</button>
+        </form>
+
+        <div *ngIf="errorMessage" class="alert alert-danger mt-4" role="alert">
+          {{ errorMessage }}
+        </div>
+      </div>
+
+      <!-- Parte 2: Tabla de Amortización y Botón de Exportación -->
+      <div class="results-section mt-4">
+        <div class="table-container"> <!-- Añadido para permitir el desplazamiento horizontal -->
+          <table class="table table-bordered mt-4" *ngIf="amortizationTable.length > 0">
+            <thead>
+              <tr>
+                <th>PAGO</th>
+                <th>SALDO INSOLUTO</th>
+                <th>INTERÉS</th>
+                <th>IVA DE INTERÉS ORDINARIO</th>
+                <th>AMORTIZACIÓN</th>
+                <th>MENSUALIDAD (S/ACCESORIOS)</th>
+                <th>MENSUALIDAD TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of amortizationTable">
+                <td>{{ row.month }}</td>
+                <td>{{ row.balance }}</td>
+                <td>{{ row.interest }}</td>
+                <td>{{ row.iva }}</td>
+                <td>{{ row.amortization }}</td>
+                <td>{{ row.totalPaymentWithoutFees }}</td>
+                <td>{{ row.totalPayment }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button *ngIf="amortizationTable.length > 0" (click)="exportToExcel()" class="btn btn-success btn-block mt-4">
+          Exportar a Excel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parte 3: Pie de Página -->
+  <footer class="footer">
+    <div class="footer-content">
+      <ul class="footer-info">
+        <li>2024. Todos los derechos reservados</li>
+        <li>Dev: Sánchez Milán Hugo</li>
+      </ul>
+      <div class="footer-right">
+        <div class="social-links">
+          <a href="https://github.com/Hugo-S-M-28" aria-label="Github" target="_blank" rel="noopener">
+            <img src="assets/Github.png" alt="Github" class="social-icon">
+          </a>
+          <!-- Otros íconos de redes sociales -->
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

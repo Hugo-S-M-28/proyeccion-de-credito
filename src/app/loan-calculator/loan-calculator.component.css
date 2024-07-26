@@ -1,0 +1,280 @@
+/* src/app/loan-calculator/loan-calculator.component.css */
+
+/* Estilos Generales */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Calibri', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1; /* Permite que el contenido principal expanda el espacio disponible */
+  padding-bottom: 80px; /* Espacio para el pie de página */
+}
+
+/* Contenedor */
+.container {
+  max-width: 960px; /* Ancho máximo del contenedor */
+  margin: 0 auto;
+  padding: 0 20px; /* Padding lateral */
+}
+
+/* Sección del Formulario y Resultados */
+.form-section,
+.results-section {
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 60px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.form-section {
+  background-color: #f8f9fa;
+}
+
+.form-section img {
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+
+.img-fluid {
+  height: 1em;
+  width: auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input,
+button {
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+input {
+  border: 1px solid #ddd;
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button.btn-success {
+  background-color: #28a745;
+}
+
+button.btn-success:hover {
+  background-color: #218838;
+}
+
+.alert {
+  color: red;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Tabla de amortización */
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+  word-wrap: break-word;
+}
+
+.table thead {
+  background-color: #f8f9fa;
+}
+
+.table thead th {
+  font-weight: bold;
+  color: #333;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Pie de Página */
+.footer {
+  background-color: #0056b3;
+  color: white;
+  text-align: center;
+  font-size: 0.75rem;
+  width: 100%;
+  padding: 10px;
+  position: relative; /* Ajuste para mayor flexibilidad */
+  margin-top: auto; /* Asegura que el pie de página se mantenga al fondo */
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-info {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.footer-info li {
+  margin: 0;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon {
+  width: 24px;
+  height: auto;
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 992px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  input,
+  button {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .table th,
+  .table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-section,
+  .results-section {
+    margin-bottom: 40px;
+  }
+
+  .footer-info {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .footer-right {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .table-container {
+    padding: 0 15px;
+  }
+
+  .table,
+  .table th,
+  .table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  button {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  .table,
+  .table th,
+  .table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  button {
+    padding: 10px;
+  }
+}
