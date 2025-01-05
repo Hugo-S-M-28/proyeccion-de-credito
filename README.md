@@ -64,7 +64,7 @@
 Las contribuciones son bienvenidas.
 Para preguntas o comentarios, puedes contactarme en:
 
-- **LinkedIn:** [Hugo Sánchez Milán](https://www.linkedin.com/in/hugo-s%C3%A1nchez-mil%C3%A1n-197b81278/)
+- **LinkedIn:** [Hugo Sánchez Milán](https://www.linkedin.com/in/hugo-s-197b81278/)
 - **GitHub:** [Hugo-S-M-28](https://github.com/Hugo-S-M-28)
 
 ## Más Ayuda
