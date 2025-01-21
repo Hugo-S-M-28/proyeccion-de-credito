@@ -124,7 +124,7 @@ Abre tu navegador y accede a `http://localhost:5173` para ver la aplicación.
 
 Para obtener más ayuda sobre Angular CLI, usa `ng help` o visita la 
 
--[Descripción general de Angular CLI y referencia de comandos](https://angular.io/cli).
+- [Descripción general de Angular CLI y referencia de comandos](https://angular.io/cli).
 - [Documentación de Angular](https://angular.io/docs)
 - [Guía de Vite](https://vitejs.dev/guide/)
 - [Bootstrap Docs](https://getbootstrap.com/)
