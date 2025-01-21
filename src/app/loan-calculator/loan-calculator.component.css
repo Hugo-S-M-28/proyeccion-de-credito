@@ -1,49 +1,57 @@
 /* src/app/loan-calculator/loan-calculator.component.css */
+/* Variables de estilo */
+:root {
+  --primary-color: #007bff;
+  --primary-hover-color: #0056b3;
+  --success-color: #28a745;
+  --success-hover-color: #218838;
+  --font-color: #333;
+  --background-color: #f8f9fa;
+  --footer-background: #0056b3;
+  --footer-text: white;
 
-/* Estilos Generales */
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  --font-family: 'Calibri', sans-serif;
+  --font-size-base: 16px;
+  --font-size-small: 14px;
+}
+
+/* Estilos generales */
 html, body {
   height: 100%;
   margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
 }
 
 body {
-  font-family: 'Calibri', sans-serif;
+  display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
 }
 
 .main-content {
-  flex: 1; /* Permite que el contenido principal expanda el espacio disponible */
-  padding-bottom: 80px; /* Espacio para el pie de página */
+  flex: 1;
+  padding-bottom: 80px;
 }
 
-/* Contenedor */
 .container {
-  max-width: 960px; /* Ancho máximo del contenedor */
+  max-width: 960px;
   margin: 0 auto;
-  padding: 0 20px; /* Padding lateral */
+  padding: 0 20px;
 }
 
-/* Sección del Formulario y Resultados */
-.form-section,
-.results-section {
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 60px;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-}
-
+/* Formulario */
 .form-section {
-  background-color: #f8f9fa;
+  background-color: var(--background-color);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 60px;
 }
 
 .form-section img {
@@ -51,24 +59,19 @@ h2 {
   margin-right: 0.5em;
 }
 
-.img-fluid {
-  height: 1em;
-  width: auto;
-}
-
 label {
   display: block;
   margin-bottom: 10px;
   font-weight: bold;
+  color: var(--font-color);
 }
 
-input,
-button {
+input, button {
   width: 100%;
   padding: 15px;
-  box-sizing: border-box;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: var(--font-size-base);
+  box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
@@ -77,13 +80,13 @@ input {
 }
 
 input:focus {
-  border-color: #007bff;
+  border-color: var(--primary-color);
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 button {
-  background-color: #007bff;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   cursor: pointer;
@@ -91,7 +94,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: var(--primary-hover-color);
   transform: scale(1.05);
 }
 
@@ -100,21 +103,21 @@ button:active {
 }
 
 button.btn-success {
-  background-color: #28a745;
+  background-color: var(--success-color);
 }
 
 button.btn-success:hover {
-  background-color: #218838;
+  background-color: var(--success-hover-color);
 }
 
 .alert {
   color: red;
   margin-top: 30px;
   text-align: center;
-  font-size: 16px;
+  font-size: var(--font-size-small);
 }
 
-/* Tabla de amortización */
+/* Tabla */
 .table-container {
   overflow-x: auto;
 }
@@ -124,8 +127,7 @@ button.btn-success:hover {
   border-collapse: collapse;
 }
 
-.table th,
-.table td {
+.table th, .table td {
   padding: 15px;
   text-align: center;
   border: 1px solid #ddd;
@@ -133,12 +135,12 @@ button.btn-success:hover {
 }
 
 .table thead {
-  background-color: #f8f9fa;
+  background-color: var(--background-color);
 }
 
 .table thead th {
   font-weight: bold;
-  color: #333;
+  color: var(--font-color);
 }
 
 .table tbody tr:nth-child(odd) {
@@ -149,16 +151,15 @@ button.btn-success:hover {
   background-color: #e9ecef;
 }
 
-/* Pie de Página */
+/* Pie de página */
 .footer {
-  background-color: #0056b3;
-  color: white;
+  background-color: var(--footer-background);
+  color: var(--footer-text);
   text-align: center;
   font-size: 0.75rem;
   width: 100%;
   padding: 10px;
-  position: relative; /* Ajuste para mayor flexibilidad */
-  margin-top: auto; /* Asegura que el pie de página se mantenga al fondo */
+  margin-top: auto;
 }
 
 .footer-content {
@@ -172,9 +173,7 @@ button.btn-success:hover {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  text-align: center;
 }
 
 .footer-info li {
@@ -191,7 +190,6 @@ button.btn-success:hover {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.5rem;
 }
 
 .social-links a {
@@ -206,39 +204,29 @@ button.btn-success:hover {
 }
 
 /* Media Queries */
-@media (max-width: 1200px) {
-  .container {
-    max-width: 90%;
-  }
-}
-
 @media (max-width: 992px) {
   h2 {
     font-size: 1.5rem;
   }
 
-  input,
-  button {
-    font-size: 16px;
+  input, button {
+    font-size: var(--font-size-small);
     padding: 12px;
   }
 
-  .table th,
-  .table td {
-    font-size: 14px;
+  .table th, .table td {
+    font-size: var(--font-size-small);
     padding: 10px;
   }
 }
 
 @media (max-width: 768px) {
-  .form-section,
-  .results-section {
+  .form-section, .results-section {
     margin-bottom: 40px;
   }
 
   .footer-info {
     text-align: center;
-    margin-bottom: 10px;
   }
 
   .footer-right {
@@ -250,15 +238,9 @@ button.btn-success:hover {
     padding: 0 15px;
   }
 
-  .table,
-  .table th,
-  .table td {
+  .table th, .table td {
     font-size: 14px;
-    padding: 10px;
-  }
-
-  button {
-    padding: 12px;
+    padding: 8px;
   }
 }
 
@@ -267,11 +249,9 @@ button.btn-success:hover {
     font-size: 1.25rem;
   }
 
-  .table,
-  .table th,
-  .table td {
+  .table th, .table td {
     font-size: 12px;
-    padding: 8px;
+    padding: 6px;
   }
 
   button {
