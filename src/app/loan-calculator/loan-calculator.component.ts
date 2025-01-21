@@ -5,11 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; // Importa CommonModule
 
 @Component({
-  selector: 'app-loan-calculator',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './loan-calculator.component.html',
-  styleUrls: ['./loan-calculator.component.css']
+    selector: 'app-loan-calculator',
+    imports: [FormsModule, CommonModule],
+    templateUrl: './loan-calculator.component.html',
+    styleUrls: ['./loan-calculator.component.css']
 })
 export class LoanCalculatorComponent {
   principal: number = 0;
