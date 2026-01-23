@@ -81,17 +81,13 @@ npm run build
 ---
 ## 🌐 **Contacto**
 
-Proyecto desarrollado con enfoque en calidad y experiencia de usuario.
-
 - **Desarrollador:** Hugo Sánchez Milán
 - **GitHub:** [Hugo-S-M-28](https://github.com/Hugo-S-M-28)
 - **LinkedIn:** [Hugo Sánchez Milán](https://www.linkedin.com/in/hugo-s-197b81278/)
 
----
 ## 📚 **Recursos Adicionales**
 
 Para obtener más ayuda sobre React 18 y Vite , consulta sus respectivas documentaciones oficiales:
 
 - [React 18](https://reactjs.org/docs/getting-started.html)
 - [Vite](https://vite.dev/guide/)
-

@@ -305,9 +305,12 @@ label {
 .social-icon {
   height: 1.25rem;
   width: auto;
-  filter: brightness(0) invert(1);
-  /* Hacer blanco el icono si es negro */
   opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.social-icon:hover {
+  opacity: 1;
 }
 
 /*====Utilidades de Texto====*/

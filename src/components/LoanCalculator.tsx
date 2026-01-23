@@ -7,6 +7,9 @@ import { generateLoanPDF } from '../utils/pdfUtils';
 import { saveCalculation, getHistory, clearHistory } from '../utils/storageUtils';
 import type { CalculationHistoryItem } from '../utils/storageUtils';
 
+import githubIcon from '../assets/Github.png';
+import infoIcon from '../assets/icons8-v1.png';
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const LoanCalculator: React.FC = () => {
@@ -321,7 +324,7 @@ const LoanCalculator: React.FC = () => {
                         </div>
                         <div className="d-flex align-items-center mb-3">
                             <img
-                                src="/assets/icons8-v1.png"
+                                src={infoIcon}
                                 alt="Información"
                                 style={{ height: '1.5rem', marginRight: '0.5rem' }}
                             />
@@ -502,7 +505,7 @@ const LoanCalculator: React.FC = () => {
                         <a href="https://github.com/Hugo-S-M-28" aria-label="Github" target="_blank" rel="noopener noreferrer" className="developer-link">
                             <span className="text-muted small me-2">Desarrollado por:</span>
                             <span className="fw-bold text-white">Sánchez Milán Hugo</span>
-                            <img src="/assets/Github.png" alt="Github" className="social-icon ms-2" />
+                            <img src={githubIcon} alt="Github" className="social-icon ms-2" />
                         </a>
                     </div>
                 </div>
