@@ -1,131 +1,97 @@
-# Proyección de Crédito
+# Proyección de Crédito (Calculadora Financiera Pro)
 
-## Descripción
-**Proyección de Crédito** es una aplicación web interactiva que permite a los usuarios calcular y generar tablas de amortización de préstamos de manera sencilla y eficiente. Introduce los datos de tu préstamo, calcula las cuotas mensuales y explora un desglose detallado de los pagos a lo largo del tiempo.
+## 📄 Descripción
+**Proyección de Crédito** es una aplicación web profesional desarrollada en **React** que permite a los usuarios simular préstamos, calcular tablas de amortización detalladas y visualizar costos financieros. Diseñada para ser intuitiva y poderosa, incluye capacidades avanzadas como abonos extra a capital, gráficos interactivos y exportación de reportes formales.
 
 ---
-## 📋 **Características**
+## ✨ **Características Principales**
 
-- ✅ **Cálculo Preciso:** Genera tablas de amortización basadas en montos, tasas de interés y plazos definidos.
-- ✅ **Interfaz Intuitiva:** Fácil de usar y diseñada para ofrecer una experiencia agradable.
-- ✅ **Rendimiento Óptimo:** Aprovecha las capacidades de **Angular** y **Vite** para máxima velocidad y rendimiento.
-- ✅ **Diseño Responsivo:** Perfectamente adaptado para dispositivos móviles, tabletas y computadoras.
-- ✅ **Exportación de Resultados:** Guarda los cálculos en formatos compatibles para referencias futuras.
+- 🧮 **Cálculo Avanzado:** Simulación precisa con capital, tasa anual, plazo y comisiones (Apertura/Investigación).
+- 📅 **Proyección Real:** Selección de fecha de inicio y cálculo automático de la fecha de término estimada.
+- 💰 **Abonos a Capital:** Funcionalidad para simular pagos extra mensuales, mostrando automáticamente el ahorro en tiempo e intereses.
+- 📊 **Visualización Interactiva:** Gráficos dinámicos (Dona) para entender el desglose del costo (Capital vs Intereses vs IVA).
+- 💾 **Historial Automático:** Persistencia de datos local. La aplicación guarda tus últimos cálculos para consulta rápida.
+- 📉 **Exportación Profesional:**
+  - **Excel (.xlsx):** Tabla de amortización completa.
+  - **PDF (.pdf):** Reporte formal con resumen ejecutivo y cronograma de pagos.
 
 ---
 ## 🚀 **Tecnologías Utilizadas**
 
-| Tecnología   | Descripción                                                                                  |
-|--------------|----------------------------------------------------------------------------------------------|
-| **Angular**  | Framework principal para construir la aplicación.                                           |
-| **Vite**     | Herramienta moderna para un desarrollo rápido y una compilación optimizada.                 |
-| **TypeScript** | Lenguaje tipado para mayor robustez y mantenibilidad del código.                          |
-| **HTML5**    | Estructura semántica del contenido.                                                         |
-| **CSS3**     | Diseño visual y adaptativo para una mejor experiencia de usuario.                           |
-| **Bootstrap**| Framework de diseño para un desarrollo rápido y responsivo.                                 |
+El proyecto ha sido modernizado utilizando las últimas herramientas de desarrollo web:
+
+| Tecnología | Propósito |
+|------------|-----------|
+| **React 18** | Biblioteca principal de interfaz de usuario. |
+| **Vite** | Entorno de desarrollo ultrarrápido y bundler. |
+| **TypeScript** | Seguridad de tipos y robustez en la lógica financiera. |
+| **Chart.js** | Renderizado de gráficos estadísticos. |
+| **ExcelJS** | Generación de archivos Excel en el navegador. |
+| **jsPDF** | Generación de reportes PDF profesionales. |
+| **CSS3** | Diseño responsivo con variables CSS y estilo Glassmorphism. |
 
 ---
 ## 🗂️ **Estructura del Proyecto**
 
 ```plaintext
-Proyeccion-De-Credito/
+proyeccion-de-credito/
 ├── src/
-│   ├── app/
-│   │   ├── loan-calculator/
-│   │   │   ├── loan-calculator.component.css       # Estilos del componente
-│   │   │   ├── loan-calculator.component.html      # Plantilla HTML
-│   │   │   ├── loan-calculator.component.spec.ts   # Pruebas unitarias
-│   │   │   ├── loan-calculator.component.ts        # Lógica del componente
-│   │   ├── app.component.css                       # Estilos globales del app root
-│   │   ├── app.component.html                      # Plantilla del componente raíz
-│   │   ├── app.component.ts                        # Lógica del componente raíz
-│   │   ├── app.routes.ts                           # Configuración de rutas
-│   │   ├── loan.service.ts                         # Servicio para lógica compartida
-│   ├── assets/
-│   │   ├── favicon.ico                             # Ícono de la aplicación
-│   ├── index.html                                  # Entrada principal de la aplicación
-│   ├── main.ts                                     # Punto de inicio de Angular
-│   ├── styles.css                                  # Estilos globales
-├── angular.json                                    # Configuración principal de Angular
-├── vite.config.ts                                  # Configuración para Vite
-├── package.json                                    # Dependencias y scripts
-├── tsconfig.json                                   # Configuración de TypeScript
+│   ├── components/
+│   │   ├── LoanCalculator.tsx      # Componente principal de la calculadora
+│   │   ├── LoanCalculator.css      # Estilos modernos del componente
+│   ├── utils/
+│   │   ├── loanUtils.ts            # Motor de cálculo financiero (Amortización)
+│   │   ├── pdfUtils.ts             # Generador de reportes PDF
+│   │   ├── storageUtils.ts         # Manejo de persistencia (LocalStorage)
+│   ├── App.tsx                     # Componente raíz
+│   ├── main.tsx                    # Punto de entrada
+├── public/                         # Assets estáticos
+├── index.html                      # HTML base
+├── vite.config.ts                  # Configuración de Vite
+└── package.json                    # Dependencias
 ```
 
 ---
-## 🔧 **Instalación y Configuración**
+## 🔧 **Instalación y Uso**
 
-Sigue estos pasos para ejecutar la aplicación localmente:
+Sigue estos pasos para ejecutar la aplicación en tu entorno local:
 
 ### 1️⃣ **Clonar el Repositorio**
 ```bash
 git clone https://github.com/Hugo-S-M-28/proyeccion-de-credito.git
 ```
 
-### 2️⃣ **Navegar al Directorio**
+### 2️⃣ **Instalar Dependencias**
 ```bash
 cd proyeccion-de-credito
-```
-
-### 3️⃣ **Instalar Dependencias**
-Asegúrate de tener [Node.js](https://nodejs.org/) instalado, luego ejecuta:
-```bash
 npm install
 ```
 
-### 4️⃣ **Ejecutar el Servidor**
-Inicia el servidor de desarrollo con Vite:
+### 3️⃣ **Ejecutar en Desarrollo**
 ```bash
 npm run dev
 ```
+Abre tu navegador en `http://localhost:5173`.
 
-Abre tu navegador y accede a `http://localhost:5173` para ver la aplicación.
-
----
-## 🛠️ **Comandos Útiles**
-
-| Comando               | Descripción                                                     |
-|-----------------------|-----------------------------------------------------------------|
-| `npm run dev`         | Inicia el servidor de desarrollo con Vite.                     |
-| `npm run build`       | Genera una compilación lista para producción en `dist/`.       |
-| `npm run preview`     | Sirve la aplicación compilada para pruebas locales.            |
-| `ng generate`         | Genera nuevos componentes, servicios, módulos, etc.           |
-| `ng test`             | Ejecuta pruebas unitarias con [Karma](https://karma-runner.github.io). |
-| `ng e2e`              | Realiza pruebas end-to-end para la aplicación.                 |
-
----
-## 💻 **Uso**
-
-1. **Ingresar Datos:**  
-   Completa el formulario con:
-   - Monto del préstamo.
-   - Tasa de interés anual.
-   - Plazo en meses.
-
-2. **Generar Amortización:**  
-   Presiona el botón "Calcular" para generar la tabla de amortización.
-
-3. **Explorar Resultados:**  
-   Visualiza el desglose de cada pago con detalles de capital, intereses y saldo.
-
-4. **Exportar Resultados:**  
-   Guarda los resultados en un archivo para referencia futura.
+### 4️⃣ **Construir para Producción**
+```bash
+npm run build
+```
 
 ---
 ## 🌐 **Contacto**
 
-¡Las contribuciones son bienvenidas! Si tienes preguntas o sugerencias, no dudes en contactarme:
+Proyecto desarrollado con enfoque en calidad y experiencia de usuario.
 
-- **LinkedIn:** [Hugo Sánchez Milán](https://www.linkedin.com/in/hugo-s-197b81278/)
+- **Desarrollador:** Hugo Sánchez Milán
 - **GitHub:** [Hugo-S-M-28](https://github.com/Hugo-S-M-28)
+- **LinkedIn:** [Hugo Sánchez Milán](https://www.linkedin.com/in/hugo-s-197b81278/)
 
 ---
 ## 📚 **Recursos Adicionales**
 
-Para obtener más ayuda sobre Angular CLI, usa `ng help` o visita la 
+Para obtener más ayuda sobre React 18 y Vite , consulta sus respectivas documentaciones oficiales:
 
-- [Descripción general de Angular CLI y referencia de comandos](https://angular.io/cli).
-- [Documentación de Angular](https://angular.io/docs)
-- [Guía de Vite](https://vitejs.dev/guide/)
-- [Bootstrap Docs](https://getbootstrap.com/)
----
+- [React 18](https://reactjs.org/docs/getting-started.html)
+- [Vite](https://vite.dev/guide/)
+
