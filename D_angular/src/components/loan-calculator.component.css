@@ -519,6 +519,17 @@
   font-weight: 600;
 }
 
+.cell-total-highlight {
+  color: #f8fafc;
+  font-weight: 700;
+  background: rgba(59, 130, 246, 0.12) !important;
+  border-left: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+.amortization-table tbody tr:hover .cell-total-highlight {
+  background: rgba(59, 130, 246, 0.2) !important;
+}
+
 /* Totals Row */
 .totals-row td {
   background: rgba(59, 130, 246, 0.08);

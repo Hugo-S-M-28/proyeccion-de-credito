@@ -160,11 +160,11 @@ export const calculateAmortization = (params: LoanParams): AmortizationResult =>
             totalIva,
             totalPayment: accumulatedPayment,
             monthlyPayment,
-            monthsSaved: Math.max(0, months - table.length),
+            monthsSaved: Math.max(0, months - (table.length - 1)),
             interestSaved: Math.max(0, baseTotalInterest - totalInterest),
             finalDate: table.length > 0 ? table[table.length - 1].date : null,
             originalMonths: months,
-            actualMonths: table.length
+            actualMonths: table.length - 1
         },
         table
     };

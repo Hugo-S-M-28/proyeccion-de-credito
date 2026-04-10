@@ -37,7 +37,7 @@
               <input type="number" id="principal" formControlName="principal" class="form-control has-prefix"
                 placeholder="0" />
             </div>
-            <div *ngIf="f['principal'].invalid && (f['principal'].dirty || f['principal'].touched)"
+            <div *ngIf="f['principal'].invalid && isSubmitted"
               class="invalid-feedback">
               Monto requerido (mín. $1).
             </div>
@@ -54,7 +54,7 @@
                 placeholder="0" step="0.01" />
               <span class="input-suffix">%</span>
             </div>
-            <div *ngIf="f['annualRate'].invalid && (f['annualRate'].dirty || f['annualRate'].touched)"
+            <div *ngIf="f['annualRate'].invalid && isSubmitted"
               class="invalid-feedback">
               Tasa requerida (mín. 0.01%).
             </div>
@@ -67,7 +67,7 @@
             </label>
             <input type="number" id="months" formControlName="months" class="form-control"
               [class.is-invalid]="f['months'].invalid && (f['months'].dirty || f['months'].touched)" placeholder="0" />
-            <div *ngIf="f['months'].invalid && (f['months'].dirty || f['months'].touched)" class="invalid-feedback">
+            <div *ngIf="f['months'].invalid && isSubmitted" class="invalid-feedback">
               Plazo requerido (número entero).
             </div>
           </div>
@@ -240,7 +240,7 @@
               <td class="cell-money" *ngIf="loanForm.get('extraPayment')?.value > 0">{{ row.extraPayment |
                 currency:'':'':'1.2-2' }}</td>
               <td class="cell-money">{{ row.totalPaymentWithoutFees | currency:'':'':'1.2-2' }}</td>
-              <td class="cell-money cell-highlight">{{ row.totalPayment | currency:'':'':'1.2-2' }}</td>
+              <td class="cell-money cell-total-highlight">{{ row.totalPayment | currency:'':'':'1.2-2' }}</td>
             </tr>
           </tbody>
           <tfoot>

@@ -15,6 +15,7 @@ export class LoanCalculatorComponent implements OnInit {
   result: AmortizationResult | null = null;
   errorMessage: string | null = null;
   isCalculating: boolean = false;
+  isSubmitted: boolean = false;
   history: CalculationHistoryItem[] = [];
 
   constructor(
@@ -54,6 +55,8 @@ export class LoanCalculatorComponent implements OnInit {
    * Ejecuta el cálculo
    */
   calculate(): void {
+    this.isSubmitted = true;
+    
     if (this.loanForm.invalid) {
       this.errorMessage = 'Por favor, completa todos los campos correctamente.';
       return;
@@ -62,16 +65,19 @@ export class LoanCalculatorComponent implements OnInit {
     this.errorMessage = null;
     this.isCalculating = true;
 
-    try {
-      const params: LoanParams = this.loanForm.value;
-      this.result = this.loanService.calculateAmortization(params);
-      this.loadHistory(); // Recargar historial después de guardar el nuevo
-    } catch (error) {
-      console.error('Error en el cálculo:', error);
-      this.errorMessage = 'Error al realizar el cálculo.';
-    } finally {
-      this.isCalculating = false;
-    }
+    // Simulación de carga ligera para feedback visual
+    setTimeout(() => {
+      try {
+        const params: LoanParams = this.loanForm.value;
+        this.result = this.loanService.calculateAmortization(params);
+        this.loadHistory();
+      } catch (error) {
+        console.error('Error en el cálculo:', error);
+        this.errorMessage = 'Error al realizar el cálculo.';
+      } finally {
+        this.isCalculating = false;
+      }
+    }, 300);
   }
 
   /**
@@ -124,14 +130,15 @@ export class LoanCalculatorComponent implements OnInit {
       principal: null,
       annualRate: null,
       months: null,
-      ivaRate: null,
-      openingFee: null,
-      approvalFee: null,
-      extraPayment: null,
+      ivaRate: 16,
+      openingFee: 0,
+      approvalFee: 0,
+      extraPayment: 0,
       startDate: new Date().toISOString().split('T')[0]
     });
     this.result = null;
     this.errorMessage = null;
+    this.isSubmitted = false;
   }
 
   get f() { return this.loanForm.controls; }
