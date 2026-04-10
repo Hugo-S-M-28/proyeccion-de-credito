@@ -1,0 +1,303 @@
+<!-- Loan Calculator Component Template -->
+<div class="calculator-wrapper">
+
+  <!-- Header -->
+  <header class="calculator-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="bi bi-calculator-fill"></i>
+      </div>
+      <div>
+        <h1>Proyección de Crédito</h1>
+        <p class="header-subtitle">Calculadora de Amortización de Préstamos</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="calculator-body">
+
+    <!-- ===== FORMULARIO ===== -->
+    <section class="card form-card" id="loan-form-section">
+      <div class="card-header-custom">
+        <i class="bi bi-pencil-square"></i>
+        <span>Datos del Préstamo</span>
+      </div>
+
+      <form [formGroup]="loanForm" (ngSubmit)="calculate()" class="loan-form">
+        <div class="form-grid">
+
+          <!-- Monto del Préstamo -->
+          <div class="form-group">
+            <label for="principal">
+              <i class="bi bi-cash-stack"></i> Monto del Préstamo
+            </label>
+            <div class="input-wrapper"
+              [class.is-invalid]="f['principal'].invalid && (f['principal'].dirty || f['principal'].touched)">
+              <span class="input-prefix">$</span>
+              <input type="number" id="principal" formControlName="principal" class="form-control has-prefix"
+                placeholder="0" />
+            </div>
+            <div *ngIf="f['principal'].invalid && (f['principal'].dirty || f['principal'].touched)"
+              class="invalid-feedback">
+              Monto requerido (mín. $1).
+            </div>
+          </div>
+
+          <!-- Tasa de Interés Anual -->
+          <div class="form-group">
+            <label for="annualRate">
+              <i class="bi bi-percent"></i> Tasa de Interés Anual
+            </label>
+            <div class="input-wrapper"
+              [class.is-invalid]="f['annualRate'].invalid && (f['annualRate'].dirty || f['annualRate'].touched)">
+              <input type="number" id="annualRate" formControlName="annualRate" class="form-control has-suffix"
+                placeholder="0" step="0.01" />
+              <span class="input-suffix">%</span>
+            </div>
+            <div *ngIf="f['annualRate'].invalid && (f['annualRate'].dirty || f['annualRate'].touched)"
+              class="invalid-feedback">
+              Tasa requerida (mín. 0.01%).
+            </div>
+          </div>
+
+          <!-- Plazo -->
+          <div class="form-group">
+            <label for="months">
+              <i class="bi bi-calendar3"></i> Plazo (meses)
+            </label>
+            <input type="number" id="months" formControlName="months" class="form-control"
+              [class.is-invalid]="f['months'].invalid && (f['months'].dirty || f['months'].touched)" placeholder="0" />
+            <div *ngIf="f['months'].invalid && (f['months'].dirty || f['months'].touched)" class="invalid-feedback">
+              Plazo requerido (número entero).
+            </div>
+          </div>
+
+          <!-- IVA de Interés -->
+          <div class="form-group">
+            <label for="ivaRate">
+              <i class="bi bi-receipt"></i> IVA sobre Intereses
+            </label>
+            <div class="input-wrapper"
+              [class.is-invalid]="f['ivaRate'].invalid && (f['ivaRate'].dirty || f['ivaRate'].touched)">
+              <input type="number" id="ivaRate" formControlName="ivaRate" class="form-control has-suffix"
+                placeholder="16" step="0.01" />
+              <span class="input-suffix">%</span>
+            </div>
+          </div>
+
+          <!-- Comisión por Contratación -->
+          <div class="form-group">
+            <label for="openingFee">
+              <i class="bi bi-file-earmark-text"></i> Comisión por Contratación
+            </label>
+            <div class="input-wrapper">
+              <span class="input-prefix">$</span>
+              <input type="number" id="openingFee" formControlName="openingFee" class="form-control has-prefix"
+                placeholder="0" />
+            </div>
+          </div>
+
+          <!-- Comisión por Autorización -->
+          <div class="form-group">
+            <label for="approvalFee">
+              <i class="bi bi-check-circle"></i> Comisión por Autorización
+            </label>
+            <div class="input-wrapper">
+              <span class="input-prefix">$</span>
+              <input type="number" id="approvalFee" formControlName="approvalFee" class="form-control has-prefix"
+                placeholder="0" />
+            </div>
+          </div>
+
+          <!-- Abono Extra -->
+          <div class="form-group">
+            <label for="extraPayment">
+              <i class="bi bi-plus-circle"></i> Abono Extra Mensual
+            </label>
+            <div class="input-wrapper">
+              <span class="input-prefix">$</span>
+              <input type="number" id="extraPayment" formControlName="extraPayment" class="form-control has-prefix"
+                placeholder="0" />
+            </div>
+          </div>
+
+          <!-- Fecha de Inicio -->
+          <div class="form-group">
+            <label for="startDate">
+              <i class="bi bi-calendar-event"></i> Fecha de Inicio
+            </label>
+            <input type="date" id="startDate" formControlName="startDate" class="form-control" />
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert-error" role="alert">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Buttons -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="btn-calculate"
+            [disabled]="isCalculating || loanForm.invalid">
+            <i class="bi bi-calculator"></i>
+            {{ isCalculating ? 'Calculando...' : 'Calcular Amortización' }}
+          </button>
+          <button type="button" class="btn btn-outline" id="btn-reset" (click)="reset()">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            Limpiar
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ===== RESUMEN ===== -->
+    <section class="card summary-card" *ngIf="result" id="summary-section">
+      <div class="card-header-custom">
+        <i class="bi bi-graph-up"></i>
+        <span>Resumen del Crédito</span>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-item highlight-primary">
+          <span class="summary-label">Cuota Mensual Fija</span>
+          <span class="summary-value">{{ result.summary.monthlyPayment | currency:'MXN':'symbol-narrow':'1.2-2'
+            }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Total a Pagar</span>
+          <span class="summary-value">{{ result.summary.totalPayment | currency:'MXN':'symbol-narrow':'1.2-2' }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Interés Total</span>
+          <span class="summary-value">{{ result.summary.totalInterest | currency:'MXN':'symbol-narrow':'1.2-2' }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">IVA Total</span>
+          <span class="summary-value">{{ result.summary.totalIva | currency:'MXN':'symbol-narrow':'1.2-2' }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Plazo Real</span>
+          <span class="summary-value">{{ result.summary.actualMonths }} meses</span>
+        </div>
+        <div class="summary-item" *ngIf="result.summary.finalDate">
+          <span class="summary-label">Fecha de Término</span>
+          <span class="summary-value">{{ result.summary.finalDate }}</span>
+        </div>
+      </div>
+
+      <!-- Savings Badge -->
+      <div class="savings-badge" *ngIf="result.summary.interestSaved > 0">
+        <i class="bi bi-trophy-fill"></i>
+        <div>
+          <strong>¡Ahorro con pagos extra!</strong>
+          <p>Ahorras {{ result.summary.interestSaved | currency:'MXN':'symbol-narrow':'1.2-2' }} en intereses
+            y reduces {{ result.summary.monthsSaved }} meses tu crédito.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TABLA DE AMORTIZACIÓN ===== -->
+    <section class="card table-card" *ngIf="result && result.table.length > 0" id="table-section">
+      <div class="card-header-custom">
+        <i class="bi bi-table"></i>
+        <span>Tabla de Amortización</span>
+        <div class="table-actions">
+          <button class="btn btn-export-pdf" (click)="exportToPDF()" id="btn-export-pdf">
+            <i class="bi bi-file-earmark-pdf-fill"></i>
+            Exportar PDF
+          </button>
+          <button class="btn btn-export" (click)="exportToExcel()" id="btn-export">
+            <i class="bi bi-file-earmark-excel-fill"></i>
+            Exportar a Excel
+          </button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="amortization-table" id="amortization-table">
+          <thead>
+            <tr>
+              <th>Pago</th>
+              <th>Fecha</th>
+              <th>Saldo Insoluto</th>
+              <th>Interés</th>
+              <th>IVA Interés</th>
+              <th>Amortización</th>
+              <th *ngIf="loanForm.get('extraPayment')?.value > 0">Abono Extra</th>
+              <th>Mensualidad (S/Acc)</th>
+              <th>Mensualidad Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of result.table; let last = last" [class.last-row]="last">
+              <td class="cell-center">{{ row.month }}</td>
+              <td class="cell-center">{{ row.date }}</td>
+              <td class="cell-money">{{ row.balance | currency:'':'':'1.2-2' }}</td>
+              <td class="cell-money">{{ row.interest | currency:'':'':'1.2-2' }}</td>
+              <td class="cell-money">{{ row.iva | currency:'':'':'1.2-2' }}</td>
+              <td class="cell-money">{{ row.amortization | currency:'':'':'1.2-2' }}</td>
+              <td class="cell-money" *ngIf="loanForm.get('extraPayment')?.value > 0">{{ row.extraPayment |
+                currency:'':'':'1.2-2' }}</td>
+              <td class="cell-money">{{ row.totalPaymentWithoutFees | currency:'':'':'1.2-2' }}</td>
+              <td class="cell-money cell-highlight">{{ row.totalPayment | currency:'':'':'1.2-2' }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="totals-row">
+              <td class="cell-center" colspan="2"><strong>TOTALES</strong></td>
+              <td></td>
+              <td class="cell-money"><strong>{{ result.summary.totalInterest | currency:'':'':'1.2-2' }}</strong></td>
+              <td class="cell-money"><strong>{{ result.summary.totalIva | currency:'':'':'1.2-2' }}</strong></td>
+              <td></td>
+              <td *ngIf="loanForm.get('extraPayment')?.value > 0"></td>
+              <td></td>
+              <td class="cell-money cell-highlight"><strong>{{ result.summary.totalPayment | currency:'':'':'1.2-2'
+                  }}</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== HISTORIAL DE CÁLCULOS ===== -->
+    <section class="card history-card" *ngIf="history.length > 0" id="history-section">
+      <div class="card-header-custom">
+        <i class="bi bi-clock-history"></i>
+        <span>Historial de Cálculos</span>
+        <div class="table-actions">
+          <button class="btn-text" (click)="clearHistory()">
+            <i class="bi bi-trash"></i> Borrar Todo
+          </button>
+        </div>
+      </div>
+      <div class="history-list">
+        <div *ngFor="let item of history" class="history-item" (click)="applyHistoryItem(item)">
+          <div class="history-info">
+            <span class="history-date">{{ item.date }}</span>
+            <span class="history-param">
+              {{ item.formData.principal | currency:'MXN':'symbol-narrow':'1.0-0' }} @ {{ item.formData.annualRate }}%
+              ({{ item.formData.months }} meses)
+            </span>
+          </div>
+          <div class="history-summary">
+            <span class="history-total">{{ item.summary.totalPayment | currency:'MXN':'symbol-narrow':'1.0-0' }}</span>
+            <i class="bi bi-chevron-right"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="calculator-footer">
+    <div class="footer-inner">
+      <span class="footer-copy">&copy; 2024 — Todos los derechos reservados</span>
+      <a href="https://github.com/Hugo-S-M-28" aria-label="Github" target="_blank" rel="noopener" class="footer-dev">
+        <i class="bi bi-github"></i>
+        <span>Dev: Sánchez Milán Hugo</span>
+      </a>
+    </div>
+  </footer>
+</div>
