@@ -1,10 +1,10 @@
 <!-- Loan Calculator Component Template -->
-<div class="calculator-wrapper">
+<div class="calculator-wrapper" role="main" aria-label="Calculadora de amortización de préstamos">
 
-  <!-- Header -->
-  <header class="calculator-header">
+  <!-- ==================== HEADER ==================== -->
+  <header class="calculator-header" role="banner">
     <div class="header-content">
-      <div class="header-icon">
+      <div class="header-icon" aria-hidden="true">
         <i class="bi bi-calculator-fill"></i>
       </div>
       <div>
@@ -16,217 +16,277 @@
 
   <div class="calculator-body">
 
-    <!-- ===== FORMULARIO ===== -->
-    <section class="card form-card" id="loan-form-section">
+    <!-- ==================== FORMULARIO ==================== -->
+    <section class="card form-card" id="loan-form-section" aria-labelledby="form-heading">
       <div class="card-header-custom">
-        <i class="bi bi-pencil-square"></i>
-        <span>Datos del Préstamo</span>
+        <i class="bi bi-pencil-square" aria-hidden="true"></i>
+        <span id="form-heading">Datos del Préstamo</span>
       </div>
 
-      <form [formGroup]="loanForm" (ngSubmit)="calculate()" class="loan-form">
-        <div class="form-grid">
+      <form [formGroup]="loanForm" (ngSubmit)="calculate()" class="loan-form" novalidate>
 
-          <!-- Monto del Préstamo -->
-          <div class="form-group">
-            <label for="principal">
-              <i class="bi bi-cash-stack"></i> Monto del Préstamo
-            </label>
-            <div class="input-wrapper"
-              [class.is-invalid]="f['principal'].invalid && (f['principal'].dirty || f['principal'].touched)">
-              <span class="input-prefix">$</span>
-              <input type="number" id="principal" formControlName="principal" class="form-control has-prefix"
-                placeholder="0" />
+        <!-- GRUPO 1: Información principal -->
+        <fieldset class="form-fieldset">
+          <legend class="fieldset-legend">Información principal</legend>
+          <div class="form-grid responsive-grid">
+            <!-- Monto del Préstamo -->
+            <div class="form-group">
+              <label for="principal">
+                <i class="bi bi-cash-stack" aria-hidden="true"></i> Monto del Préstamo
+              </label>
+              <div class="input-wrapper"
+                [class.is-invalid]="f['principal'].invalid && (f['principal'].dirty || f['principal'].touched)">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="number" id="principal" formControlName="principal" class="form-control has-prefix"
+                  placeholder="0" inputmode="decimal" aria-describedby="principal-error" />
+              </div>
+              <div *ngIf="f['principal'].invalid && isSubmitted" class="invalid-feedback" id="principal-error"
+                role="alert">
+                Monto requerido (mín. $1).
+              </div>
             </div>
-            <div *ngIf="f['principal'].invalid && isSubmitted"
-              class="invalid-feedback">
-              Monto requerido (mín. $1).
-            </div>
-          </div>
 
-          <!-- Tasa de Interés Anual -->
-          <div class="form-group">
-            <label for="annualRate">
-              <i class="bi bi-percent"></i> Tasa de Interés Anual
-            </label>
-            <div class="input-wrapper"
-              [class.is-invalid]="f['annualRate'].invalid && (f['annualRate'].dirty || f['annualRate'].touched)">
-              <input type="number" id="annualRate" formControlName="annualRate" class="form-control has-suffix"
-                placeholder="0" step="0.01" />
-              <span class="input-suffix">%</span>
+            <!-- Tasa de Interés Anual -->
+            <div class="form-group">
+              <label for="annualRate">
+                <i class="bi bi-percent" aria-hidden="true"></i> Tasa de Interés Anual
+              </label>
+              <div class="input-wrapper"
+                [class.is-invalid]="f['annualRate'].invalid && (f['annualRate'].dirty || f['annualRate'].touched)">
+                <input type="number" id="annualRate" formControlName="annualRate" class="form-control has-suffix"
+                  placeholder="0" step="0.01" inputmode="decimal" aria-describedby="rate-error" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
+              <div *ngIf="f['annualRate'].invalid && isSubmitted" class="invalid-feedback" id="rate-error" role="alert">
+                Tasa requerida (mín. 0.01%).
+              </div>
             </div>
-            <div *ngIf="f['annualRate'].invalid && isSubmitted"
-              class="invalid-feedback">
-              Tasa requerida (mín. 0.01%).
-            </div>
-          </div>
 
-          <!-- Plazo -->
-          <div class="form-group">
-            <label for="months">
-              <i class="bi bi-calendar3"></i> Plazo (meses)
-            </label>
-            <input type="number" id="months" formControlName="months" class="form-control"
-              [class.is-invalid]="f['months'].invalid && (f['months'].dirty || f['months'].touched)" placeholder="0" />
-            <div *ngIf="f['months'].invalid && isSubmitted" class="invalid-feedback">
-              Plazo requerido (número entero).
+            <!-- Plazo (meses) -->
+            <div class="form-group">
+              <label for="months">
+                <i class="bi bi-calendar3" aria-hidden="true"></i> Plazo (meses)
+              </label>
+              <input type="number" id="months" formControlName="months" class="form-control"
+                [class.is-invalid]="f['months'].invalid && (f['months'].dirty || f['months'].touched)" placeholder="0"
+                inputmode="numeric" aria-describedby="months-error" />
+              <div *ngIf="f['months'].invalid && isSubmitted" class="invalid-feedback" id="months-error" role="alert">
+                Plazo requerido (número entero).
+              </div>
             </div>
-          </div>
 
-          <!-- IVA de Interés -->
-          <div class="form-group">
-            <label for="ivaRate">
-              <i class="bi bi-receipt"></i> IVA sobre Intereses
-            </label>
-            <div class="input-wrapper"
-              [class.is-invalid]="f['ivaRate'].invalid && (f['ivaRate'].dirty || f['ivaRate'].touched)">
-              <input type="number" id="ivaRate" formControlName="ivaRate" class="form-control has-suffix"
-                placeholder="16" step="0.01" />
-              <span class="input-suffix">%</span>
-            </div>
-          </div>
-
-          <!-- Comisión por Contratación -->
-          <div class="form-group">
-            <label for="openingFee">
-              <i class="bi bi-file-earmark-text"></i> Comisión por Contratación
-            </label>
-            <div class="input-wrapper">
-              <span class="input-prefix">$</span>
-              <input type="number" id="openingFee" formControlName="openingFee" class="form-control has-prefix"
-                placeholder="0" />
+            <!-- IVA de Interés -->
+            <div class="form-group">
+              <label for="ivaRate">
+                <i class="bi bi-receipt" aria-hidden="true"></i> IVA sobre Intereses
+              </label>
+              <div class="input-wrapper"
+                [class.is-invalid]="f['ivaRate'].invalid && (f['ivaRate'].dirty || f['ivaRate'].touched)">
+                <input type="number" id="ivaRate" formControlName="ivaRate" class="form-control has-suffix"
+                  placeholder="16" step="0.01" inputmode="decimal" />
+                <span class="input-suffix" aria-hidden="true">%</span>
+              </div>
             </div>
           </div>
+        </fieldset>
 
-          <!-- Comisión por Autorización -->
-          <div class="form-group">
-            <label for="approvalFee">
-              <i class="bi bi-check-circle"></i> Comisión por Autorización
-            </label>
-            <div class="input-wrapper">
-              <span class="input-prefix">$</span>
-              <input type="number" id="approvalFee" formControlName="approvalFee" class="form-control has-prefix"
-                placeholder="0" />
+        <!-- GRUPO 2: Comisiones y configuración -->
+        <fieldset class="form-fieldset">
+          <legend class="fieldset-legend">Comisiones y configuración</legend>
+          <div class="form-grid responsive-grid">
+            <!-- Comisión por Contratación -->
+            <div class="form-group">
+              <label for="openingFee">
+                <i class="bi bi-file-earmark-text" aria-hidden="true"></i> Comisión por Contratación
+              </label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="number" id="openingFee" formControlName="openingFee" class="form-control has-prefix"
+                  placeholder="0" inputmode="decimal" />
+              </div>
+            </div>
+
+            <!-- Comisión por Autorización -->
+            <div class="form-group">
+              <label for="approvalFee">
+                <i class="bi bi-check-circle" aria-hidden="true"></i> Comisión por Autorización
+              </label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="number" id="approvalFee" formControlName="approvalFee" class="form-control has-prefix"
+                  placeholder="0" inputmode="decimal" />
+              </div>
+            </div>
+
+            <!-- Abono Extra Mensual -->
+            <div class="form-group">
+              <label for="extraPayment">
+                <i class="bi bi-plus-circle" aria-hidden="true"></i> Abono Extra Mensual
+              </label>
+              <div class="input-wrapper">
+                <span class="input-prefix" aria-hidden="true">$</span>
+                <input type="number" id="extraPayment" formControlName="extraPayment" class="form-control has-prefix"
+                  placeholder="0" inputmode="decimal" />
+              </div>
+            </div>
+
+            <!-- Fecha de Inicio -->
+            <div class="form-group">
+              <label for="startDate">
+                <i class="bi bi-calendar-event" aria-hidden="true"></i> Fecha de Inicio
+              </label>
+              <input type="date" id="startDate" formControlName="startDate" class="form-control" />
             </div>
           </div>
+        </fieldset>
 
-          <!-- Abono Extra -->
-          <div class="form-group">
-            <label for="extraPayment">
-              <i class="bi bi-plus-circle"></i> Abono Extra Mensual
-            </label>
-            <div class="input-wrapper">
-              <span class="input-prefix">$</span>
-              <input type="number" id="extraPayment" formControlName="extraPayment" class="form-control has-prefix"
-                placeholder="0" />
-            </div>
-          </div>
-
-          <!-- Fecha de Inicio -->
-          <div class="form-group">
-            <label for="startDate">
-              <i class="bi bi-calendar-event"></i> Fecha de Inicio
-            </label>
-            <input type="date" id="startDate" formControlName="startDate" class="form-control" />
-          </div>
-        </div>
-
-        <!-- Error Message -->
+        <!-- Mensaje de error global -->
         <div *ngIf="errorMessage" class="alert-error" role="alert">
-          <i class="bi bi-exclamation-triangle-fill"></i>
+          <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
           {{ errorMessage }}
         </div>
 
-        <!-- Buttons -->
-        <div class="form-actions">
+        <!-- Acciones del formulario -->
+        <div class="form-actions flex-wrap">
           <button type="submit" class="btn btn-primary" id="btn-calculate"
-            [disabled]="isCalculating || loanForm.invalid">
-            <i class="bi bi-calculator"></i>
+            [disabled]="isCalculating || loanForm.invalid" aria-label="Calcular amortización">
+            <i class="bi bi-calculator" aria-hidden="true"></i>
             {{ isCalculating ? 'Calculando...' : 'Calcular Amortización' }}
           </button>
-          <button type="button" class="btn btn-outline" id="btn-reset" (click)="reset()">
-            <i class="bi bi-arrow-counterclockwise"></i>
+          <button type="button" class="btn btn-outline" id="btn-reset" (click)="reset()"
+            aria-label="Limpiar formulario">
+            <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
             Limpiar
           </button>
         </div>
       </form>
     </section>
 
-    <!-- ===== RESUMEN ===== -->
-    <section class="card summary-card" *ngIf="result" id="summary-section">
+    <!-- ==================== RESULTADOS (RESUMEN + GRÁFICO + TABLA) ==================== -->
+    <section class="card results-card" *ngIf="result" id="results-section" aria-labelledby="results-heading">
       <div class="card-header-custom">
-        <i class="bi bi-graph-up"></i>
-        <span>Resumen del Crédito</span>
+        <i class="bi bi-graph-up-arrow" aria-hidden="true"></i>
+        <span id="results-heading">Resumen de Resultados</span>
       </div>
 
-      <div class="summary-grid">
-        <div class="summary-item highlight-primary">
+      <!-- Resumen en grid -->
+      <div class="summary-grid responsive-grid" role="list">
+        <div class="summary-item highlight-primary" role="listitem">
           <span class="summary-label">Cuota Mensual Fija</span>
           <span class="summary-value">{{ result.summary.monthlyPayment | currency:'MXN':'symbol-narrow':'1.2-2'
             }}</span>
         </div>
-        <div class="summary-item">
+        <div class="summary-item" role="listitem">
           <span class="summary-label">Total a Pagar</span>
           <span class="summary-value">{{ result.summary.totalPayment | currency:'MXN':'symbol-narrow':'1.2-2' }}</span>
         </div>
-        <div class="summary-item">
+        <div class="summary-item" role="listitem">
           <span class="summary-label">Interés Total</span>
           <span class="summary-value">{{ result.summary.totalInterest | currency:'MXN':'symbol-narrow':'1.2-2' }}</span>
         </div>
-        <div class="summary-item">
+        <div class="summary-item" role="listitem">
           <span class="summary-label">IVA Total</span>
           <span class="summary-value">{{ result.summary.totalIva | currency:'MXN':'symbol-narrow':'1.2-2' }}</span>
         </div>
-        <div class="summary-item">
+        <div class="summary-item" role="listitem">
           <span class="summary-label">Plazo Real</span>
           <span class="summary-value">{{ result.summary.actualMonths }} meses</span>
         </div>
-        <div class="summary-item" *ngIf="result.summary.finalDate">
+        <div class="summary-item" *ngIf="result.summary.finalDate" role="listitem">
           <span class="summary-label">Fecha de Término</span>
           <span class="summary-value">{{ result.summary.finalDate }}</span>
         </div>
       </div>
 
-      <!-- Savings Badge -->
-      <div class="savings-badge" *ngIf="result.summary.interestSaved > 0">
-        <i class="bi bi-trophy-fill"></i>
+      <!-- Insignia de ahorro -->
+      <div class="savings-badge" *ngIf="result.summary.interestSaved > 0" role="status">
+        <i class="bi bi-trophy-fill" aria-hidden="true"></i>
         <div>
           <strong>¡Ahorro con pagos extra!</strong>
           <p>Ahorras {{ result.summary.interestSaved | currency:'MXN':'symbol-narrow':'1.2-2' }} en intereses
             y reduces {{ result.summary.monthsSaved }} meses tu crédito.</p>
         </div>
       </div>
-    </section>
 
-    <!-- ===== TABLA DE AMORTIZACIÓN ===== -->
-    <section class="card table-card" *ngIf="result && result.table.length > 0" id="table-section">
-      <div class="card-header-custom">
-        <i class="bi bi-table"></i>
-        <span>Tabla de Amortización</span>
-        <div class="table-actions">
-          <button class="btn btn-export-pdf" (click)="exportToPDF()" id="btn-export-pdf">
-            <i class="bi bi-file-earmark-pdf-fill"></i>
-            Exportar PDF
-          </button>
-          <button class="btn btn-export" (click)="exportToExcel()" id="btn-export">
-            <i class="bi bi-file-earmark-excel-fill"></i>
-            Exportar a Excel
-          </button>
+      <!-- Sección de estadísticas y gráfico (responsiva) -->
+      <div class="stats-layout stack-on-mobile">
+        <!-- Gráfico de dona -->
+        <div class="chart-wrapper donut-box">
+          <svg viewBox="0 0 42 42" class="donut-chart" role="img" aria-label="Gráfico de distribución de pagos">
+            <circle cx="21" cy="21" r="15.9155" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="5" />
+            <circle *ngFor="let seg of chartSegments" cx="21" cy="21" r="15.9155" fill="none" [attr.stroke]="seg.color"
+              stroke-width="5" [attr.stroke-dasharray]="seg.dash" [attr.stroke-dashoffset]="seg.offset"
+              stroke-linecap="round" class="donut-segment" />
+          </svg>
+          <div class="chart-legend-inline" aria-hidden="true">
+            <span class="legend-dot" style="background:#3b82f6"></span> Capital ({{ capitalPercent | number:'1.1-1' }}%)
+            <span class="legend-dot" style="background:#10b981"></span> Interés ({{ interestPercent | number:'1.1-1'
+            }}%)
+            <span *ngIf="ivaPercent > 0" class="legend-dot" style="background:#f59e0b"></span>
+            <span *ngIf="ivaPercent > 0">IVA ({{ ivaPercent | number:'1.1-1' }}%)</span>
+          </div>
+        </div>
+
+        <!-- Panel de estadísticas -->
+        <div class="stats-panel">
+          <h3 class="stats-title">Estadísticas de Pago</h3>
+          <p class="stats-subtitle">
+            Se ha calculado un plazo real de <strong>{{ result.summary.actualMonths }} meses</strong>,
+            finalizando el <strong>{{ result.summary.finalDate }}</strong>.
+          </p>
+
+          <div class="stats-rows" role="list">
+            <div class="stat-row" role="listitem">
+              <span class="stat-dot" style="background:#3b82f6" aria-hidden="true"></span>
+              <span class="stat-name">Capital</span>
+              <span class="stat-amount">{{ loanForm.get('principal')?.value | currency:'':'$':'1.2-2' }}</span>
+              <span class="stat-badge badge-blue">{{ capitalPercent | number:'1.1-1' }}%</span>
+            </div>
+            <div class="stat-row" role="listitem">
+              <span class="stat-dot" style="background:#10b981" aria-hidden="true"></span>
+              <span class="stat-name">Interés</span>
+              <span class="stat-amount">{{ result.summary.totalInterest | currency:'':'$':'1.2-2' }}</span>
+              <span class="stat-badge badge-green">{{ interestPercent | number:'1.1-1' }}%</span>
+            </div>
+            <div class="stat-row" *ngIf="ivaPercent > 0" role="listitem">
+              <span class="stat-dot" style="background:#f59e0b" aria-hidden="true"></span>
+              <span class="stat-name">IVA</span>
+              <span class="stat-amount">{{ result.summary.totalIva | currency:'':'$':'1.2-2' }}</span>
+              <span class="stat-badge badge-amber">{{ ivaPercent | number:'1.1-1' }}%</span>
+            </div>
+          </div>
+
+          <!-- Botones de exportación -->
+          <div class="stats-export-actions flex-wrap">
+            <button class="btn btn-export" (click)="exportToExcel()" id="btn-export-stats"
+              aria-label="Exportar a Excel">
+              <i class="bi bi-file-earmark-excel-fill" aria-hidden="true"></i>
+              Excel (.xlsx)
+            </button>
+            <button class="btn btn-export-pdf" (click)="exportToPDF()" id="btn-export-pdf-stats"
+              aria-label="Exportar a PDF">
+              <i class="bi bi-file-earmark-pdf-fill" aria-hidden="true"></i>
+              PDF (.pdf)
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="table-container">
+      <!-- Tabla de amortización integrada -->
+      <div class="table-container integrated-table" *ngIf="result.table.length > 0" tabindex="0" role="region"
+        aria-label="Tabla de amortización desplazable">
         <table class="amortization-table" id="amortization-table">
           <thead>
             <tr>
-              <th>Pago</th>
-              <th>Fecha</th>
-              <th>Saldo Insoluto</th>
-              <th>Interés</th>
-              <th>IVA Interés</th>
-              <th>Amortización</th>
-              <th *ngIf="loanForm.get('extraPayment')?.value > 0">Abono Extra</th>
-              <th>Mensualidad (S/Acc)</th>
-              <th>Mensualidad Total</th>
+              <th scope="col">Pago</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Saldo Insoluto</th>
+              <th scope="col">Interés</th>
+              <th scope="col">IVA Interés</th>
+              <th scope="col">Amortización</th>
+              <th scope="col" *ngIf="loanForm.get('extraPayment')?.value > 0">Abono Extra</th>
+              <th scope="col">Mensualidad (S/Acc)</th>
+              <th scope="col">Mensualidad Total</th>
             </tr>
           </thead>
           <tbody>
@@ -260,19 +320,21 @@
       </div>
     </section>
 
-    <!-- ===== HISTORIAL DE CÁLCULOS ===== -->
-    <section class="card history-card" *ngIf="history.length > 0" id="history-section">
+    <!-- ==================== HISTORIAL DE CÁLCULOS ==================== -->
+    <section class="card history-card" *ngIf="history.length > 0" id="history-section"
+      aria-labelledby="history-heading">
       <div class="card-header-custom">
-        <i class="bi bi-clock-history"></i>
-        <span>Historial de Cálculos</span>
+        <i class="bi bi-clock-history" aria-hidden="true"></i>
+        <span id="history-heading">Historial de Cálculos</span>
         <div class="table-actions">
-          <button class="btn-text" (click)="clearHistory()">
-            <i class="bi bi-trash"></i> Borrar Todo
+          <button class="btn-text" (click)="clearHistory()" aria-label="Borrar todo el historial">
+            <i class="bi bi-trash" aria-hidden="true"></i> Borrar Todo
           </button>
         </div>
       </div>
-      <div class="history-list">
-        <div *ngFor="let item of history" class="history-item" (click)="applyHistoryItem(item)">
+      <div class="history-list" role="list">
+        <div *ngFor="let item of history" class="history-item" (click)="applyHistoryItem(item)" role="listitem"
+          tabindex="0" (keydown.enter)="applyHistoryItem(item)" aria-label="Aplicar cálculo del {{ item.date }}">
           <div class="history-info">
             <span class="history-date">{{ item.date }}</span>
             <span class="history-param">
@@ -282,7 +344,7 @@
           </div>
           <div class="history-summary">
             <span class="history-total">{{ item.summary.totalPayment | currency:'MXN':'symbol-narrow':'1.0-0' }}</span>
-            <i class="bi bi-chevron-right"></i>
+            <i class="bi bi-chevron-right" aria-hidden="true"></i>
           </div>
         </div>
       </div>
@@ -290,12 +352,13 @@
 
   </div>
 
-  <!-- Footer -->
-  <footer class="calculator-footer">
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="calculator-footer" role="contentinfo">
     <div class="footer-inner">
       <span class="footer-copy">&copy; 2024 — Todos los derechos reservados</span>
-      <a href="https://github.com/Hugo-S-M-28" aria-label="Github" target="_blank" rel="noopener" class="footer-dev">
-        <i class="bi bi-github"></i>
+      <a href="https://github.com/Hugo-S-M-28" aria-label="GitHub del desarrollador" target="_blank"
+        rel="noopener noreferrer" class="footer-dev">
+        <i class="bi bi-github" aria-hidden="true"></i>
         <span>Dev: Sánchez Milán Hugo</span>
       </a>
     </div>

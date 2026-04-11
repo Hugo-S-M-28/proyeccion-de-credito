@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
 import { LoanService, AmortizationResult, LoanParams, CalculationHistoryItem } from '../app/loan.service';
 
 @Component({
   selector: 'app-loan-calculator',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, CurrencyPipe],
+  imports: [ReactiveFormsModule, CommonModule, CurrencyPipe, DecimalPipe],
   templateUrl: './loan-calculator.component.html',
   styleUrls: ['./loan-calculator.component.css']
 })
@@ -142,4 +142,45 @@ export class LoanCalculatorComponent implements OnInit {
   }
 
   get f() { return this.loanForm.controls; }
+
+  // ===== Chart / percentage getters =====
+
+  /** Total bruto = Capital + Interés + IVA */
+  get chartTotal(): number {
+    if (!this.result) return 0;
+    const principal = this.loanForm?.get('principal')?.value ?? 0;
+    return principal + this.result.summary.totalInterest + this.result.summary.totalIva;
+  }
+
+  get capitalPercent(): number {
+    if (!this.chartTotal) return 0;
+    const principal = this.loanForm?.get('principal')?.value ?? 0;
+    return (principal / this.chartTotal) * 100;
+  }
+
+  get interestPercent(): number {
+    if (!this.chartTotal || !this.result) return 0;
+    return (this.result.summary.totalInterest / this.chartTotal) * 100;
+  }
+
+  get ivaPercent(): number {
+    if (!this.chartTotal || !this.result) return 0;
+    return (this.result.summary.totalIva / this.chartTotal) * 100;
+  }
+
+  /**
+   * Returns the SVG stroke-dasharray and stroke-dashoffset for each
+   * segment of a 3-slice doughnut drawn on a circle with r=15.9155
+   * (circumference ≈ 100).
+   */
+  get chartSegments(): { dash: string; offset: number; color: string }[] {
+    const c = this.capitalPercent;
+    const i = this.interestPercent;
+    const v = this.ivaPercent;
+    return [
+      { dash: `${c} ${100 - c}`, offset: 25,         color: '#3b82f6' },  // Capital — blue
+      { dash: `${i} ${100 - i}`, offset: 25 - c,     color: '#10b981' },  // Interés — emerald
+      { dash: `${v} ${100 - v}`, offset: 25 - c - i,  color: '#f59e0b' },  // IVA — amber
+    ];
+  }
 }

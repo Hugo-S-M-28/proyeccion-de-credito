@@ -1,5 +1,16 @@
 # 🧠 Proyección de Crédito (Versión Angular)
 
+![TypeScript](https://img.shields.io/badge/TypeScript-6.0.2-blue.svg?logo=typescript&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-21.2.7-DD0031.svg?style=flat&logo=angular&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6.0.0-646CFF.svg?style=flat&logo=vite&logoColor=white)
+![AnalogJS](https://img.shields.io/badge/AnalogJS-1.22.5-E01E5A.svg?style=flat&logo=analogue&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-3.2.1-FCC72B.svg?style=flat&logo=vitest&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3.8-7952B3.svg?style=flat&logo=bootstrap&logoColor=white)
+![ExcelJS](https://img.shields.io/badge/ExcelJS-4.4.0-107C41.svg?style=flat&logo=microsoftexcel&logoColor=white)
+![jsPDF](https://img.shields.io/badge/jsPDF-5.0.7-FF0000.svg?style=flat&logo=adobeacrobatreader&logoColor=white)
+
+---
+
 ## 🧩 Visión General del Proyecto
 
 **Proyección de Crédito** es una aplicación web financiera de alto rendimiento diseñada para simular préstamos de manera precisa, permitiendo a los usuarios analizar el comportamiento de sus créditos a lo largo del tiempo.
@@ -30,13 +41,14 @@ El sistema está construido bajo una arquitectura moderna basada en componentes,
 
 | Tecnología | Propósito |
 | :--- | :--- |
-| **Angular 21** | Framework principal para la arquitectura de componentes. |
+| **Angular** | Framework principal para la arquitectura de componentes. |
 | **Vite** | Motor de desarrollo y bundler de última generación. |
-| **AnalogJS** | Optimización del rendimiento y capacidades adicionales. |
+| **AnalogJS**| Optimización del rendimiento y capacidades adicionales para Vite + Angular. |
+| **TypeScript**| Superset de JavaScript que añade tipado estático funcional. |
 | **Vitest** | Framework de pruebas unitarias de alta velocidad. |
-| **Bootstrap 5** | Base para el layout responsivo y componentes UI. |
+| **Bootstrap** | Base para el layout responsivo y componentes UI. |
 | **ExcelJS** | Motor para la creación de reportes financieros en Excel. |
-| **jsPDF / AutoTable** | Generación de documentos PDF dinámicos. |
+| **jsPDF** | Generación de documentos PDF dinámicos junto a AutoTable. |
 
 ### 🏗️ Capas del Sistema
 
