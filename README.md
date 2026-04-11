@@ -4,6 +4,8 @@
 ![Vite](https://img.shields.io/badge/Vite-7.3.2-646CFF.svg?logo=vite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg?logo=typescript&logoColor=white)
 ![Chart.js](https://img.shields.io/badge/Chart.js-4.5.1-FF6384.svg?logo=chartdotjs&logoColor=white)
+![ExcelJS](https://img.shields.io/badge/ExcelJS-4.4.0-107C41.svg?style=flat&logo=microsoftexcel&logoColor=white)
+![jsPDF](https://img.shields.io/badge/jsPDF-5.0.7-FF0000.svg?style=flat&logo=adobeacrobatreader&logoColor=white)
 
 ## 🧩 Visión General del Proyecto
 
