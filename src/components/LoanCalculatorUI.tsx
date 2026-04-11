@@ -340,10 +340,51 @@ const AmortizationChart: React.FC<AmortizationChartProps> = ({ chartData }) => (
                         plugins: {
                             legend: {
                                 position: 'bottom',
-                                labels: { color: '#94a3b8', font: { family: 'Outfit', size: 12 } }
-                            }
+                                labels: {
+                                    color: '#94a3b8',
+                                    font: { family: 'Outfit', size: 12 },
+                                    generateLabels: (chart) => {
+                                        const data = chart.data;
+                                        if (!data.labels || !data.datasets[0]) return [];
+                                        const dataset = data.datasets[0];
+                                        const total = (dataset.data as number[]).reduce((a: number, b: number) => a + b, 0);
+                                        return data.labels.map((label, i) => {
+                                            const value = (dataset.data as number[])[i];
+                                            const pct = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
+                                            return {
+                                                text: `${label} (${pct}%)`,
+                                                fillStyle: (dataset.backgroundColor as string[])[i],
+                                                strokeStyle: 'transparent',
+                                                hidden: false,
+                                                index: i,
+                                            };
+                                        });
+                                    },
+                                    padding: 16,
+                                    usePointStyle: true,
+                                    pointStyle: 'circle',
+                                },
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => {
+                                        const dataset = context.dataset;
+                                        const total = (dataset.data as number[]).reduce((a: number, b: number) => a + b, 0);
+                                        const value = context.parsed;
+                                        const pct = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
+                                        return ` ${context.label}: $${value.toLocaleString('es-MX', { minimumFractionDigits: 2 })} (${pct}%)`;
+                                    },
+                                },
+                                backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                                titleColor: '#e2e8f0',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(59, 130, 246, 0.3)',
+                                borderWidth: 1,
+                                padding: 12,
+                                cornerRadius: 10,
+                            },
                         },
-                        cutout: '70%'
+                        cutout: '70%',
                     }}
                 />
             </div>
@@ -522,6 +563,31 @@ const LoanCalculatorUI: React.FC<LoanCalculatorUIProps> = (props) => {
                                     Se ha calculado un plazo real de <strong>{result.summary.actualMonths} meses</strong>,
                                     finalizando el <strong>{result.summary.finalDate}</strong>.
                                 </p>
+
+                                {/* Desglose porcentual */}
+                                {chartData?.percentages && (
+                                    <div className="cost-breakdown mt-3 mb-4">
+                                        <div className="breakdown-item">
+                                            <div className="breakdown-color" style={{ background: '#3b82f6' }}></div>
+                                            <span className="breakdown-label">Capital</span>
+                                            <span className="breakdown-value">${Number(params.principal).toLocaleString('es-MX', { minimumFractionDigits: 2 })}</span>
+                                            <span className="breakdown-pct">{chartData.percentages.capital}%</span>
+                                        </div>
+                                        <div className="breakdown-item">
+                                            <div className="breakdown-color" style={{ background: '#10b981' }}></div>
+                                            <span className="breakdown-label">Interés</span>
+                                            <span className="breakdown-value">${result.summary.totalInterest.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</span>
+                                            <span className="breakdown-pct">{chartData.percentages.interest}%</span>
+                                        </div>
+                                        <div className="breakdown-item">
+                                            <div className="breakdown-color" style={{ background: '#f59e0b' }}></div>
+                                            <span className="breakdown-label">IVA</span>
+                                            <span className="breakdown-value">${result.summary.totalIva.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</span>
+                                            <span className="breakdown-pct">{chartData.percentages.iva}%</span>
+                                        </div>
+                                    </div>
+                                )}
+
                                 <div className="button-group d-flex gap-3 justify-content-center justify-content-md-start mt-4">
                                     <button
                                         onClick={handleExportExcel}

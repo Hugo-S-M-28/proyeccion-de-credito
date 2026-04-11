@@ -155,17 +155,29 @@ export default function LoanCalculator() {
         }
     };
 
-    const chartData = result ? {
-        labels: ['Capital', 'Interés'],
-        datasets: [
-            {
-                data: [Number(params.principal), result.summary.totalInterest],
-                backgroundColor: ['#3b82f6', '#10b981'],
-                hoverBackgroundColor: ['#2563eb', '#059669'],
-                borderWidth: 0,
+    const chartData = result ? (() => {
+        const capital = Number(params.principal);
+        const interest = result.summary.totalInterest;
+        const iva = result.summary.totalIva;
+        const total = capital + interest + iva;
+        return {
+            labels: ['Capital', 'Interés', 'IVA'],
+            datasets: [
+                {
+                    data: [capital, interest, iva],
+                    backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
+                    hoverBackgroundColor: ['#2563eb', '#059669', '#d97706'],
+                    borderWidth: 2,
+                    borderColor: 'rgba(15, 23, 42, 0.8)',
+                },
+            ],
+            percentages: {
+                capital: ((capital / total) * 100).toFixed(1),
+                interest: ((interest / total) * 100).toFixed(1),
+                iva: ((iva / total) * 100).toFixed(1),
             },
-        ],
-    } : null;
+        };
+    })() : null;
 
     // --- Render View Component ---
     return (
